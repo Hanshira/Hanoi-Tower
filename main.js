@@ -1,5 +1,6 @@
 var HanoiTower = function(n) {
   this.diskNumber = n;
+  this.minimumMoves = Math.pow(2, n) - 1;
   var diskMimimumSize = 60;
   var incrementDiskSize = 40;
   this.defaultTower = [];
@@ -10,7 +11,15 @@ var HanoiTower = function(n) {
   this.towerSelect = [];
   for (i = this.diskNumber - 1; i >= 0; i--) {
     this.defaultTower.push({
-      size: incrementDiskSize * i + diskMimimumSize
+      size: incrementDiskSize * i + diskMimimumSize,
+      color:
+        "rgb(" +
+        Math.floor(Math.random() * 255) +
+        ", " +
+        Math.floor(Math.random() * 255) +
+        "," +
+        Math.floor(Math.random() * 255) +
+        ")"
     });
   }
   this.defaultGame();
@@ -25,7 +34,7 @@ HanoiTower.prototype.defaultGame = function() {
 HanoiTower.prototype.checkIfMove = function(originTowerNum, destTowerNum) {
   var origin = this["tower" + originTowerNum];
   var destination = this["tower" + destTowerNum];
-  if (origin.length <= 0) return false;
+  if (origin.length <= 0 || originTowerNum === destTowerNum) return false;
   else {
     if (
       destination.length >= 1 &&
@@ -52,6 +61,8 @@ HanoiTower.prototype.selectTower = function(num) {
   if (this.towerSelect.length === 0 && origin.length > 0) {
     this.towerSelect.push(num);
     return true;
+    // } else if (this.towerSelect.length === 0 && origin.length === 0) {
+    //   return true;
   } else if (this.towerSelect.length === 1) {
     this.towerSelect.push(num);
     this.originTowerNum = this.towerSelect[0];
@@ -70,10 +81,13 @@ HanoiTower.prototype.checkIfWin = function() {
   var i = 0;
   test = true;
   while (test && i < this.diskNumber) {
-    test = this.tower3[i] === this.defaultTower[i];
+    if (this.tower3[i].size === this.defaultTower[i].size) test = true;
+    else test = false;
     i++;
   }
-  if (test === true) console.log("you did it!");
+  if (test === true && this.howManyMoves() === this.minimumMoves)
+    alert("Good, you did it and with the minimum moves!");
+  else if (test === true) alert("Good, you did it!");
   return test;
 };
 

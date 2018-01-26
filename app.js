@@ -2,19 +2,31 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 var game;
-var game = new HanoiTower(3);
+var numTower;
 
 window.onload = function() {
-  //document.getElementById("").addEventListener("click", function(){
-  //get number towers
-  //var game = new HanoiTower(n);
-  draw(game);
-
-  canvas.addEventListener("click", clickFunction, false);
-  // }, false);
+  document.getElementById("select").addEventListener(
+    "change",
+    function() {
+      numTower = document.getElementById("select").value;
+      game = new HanoiTower(numTower);
+      resetCanvas();
+      draw(game);
+      canvas.addEventListener("click", clickFunction, false);
+    },
+    false
+  );
+  document
+    .getElementById("reset-button")
+    .addEventListener("click", resetbutton, false);
 };
 
-// return la posizione del mouse (oggetto)
+function startGame(num) {
+  game = new HanoiTower(num);
+  resetCanvas();
+  draw(game);
+  canvas.addEventListener("click", clickFunction, false);
+}
 
 function getPosition(e) {
   var rect = canvas.getBoundingClientRect();
@@ -24,18 +36,14 @@ function getPosition(e) {
   };
 }
 
-// return il numero della torre che sto selezionando
 function whichTower(e) {
   var clickPos = getPosition(e);
   console.log(clickPos);
   if (clickPos.x > 25 && clickPos.x < 425) {
-    console.log(1);
     return "1";
   } else if (clickPos.x > 450 && clickPos.x < 850) {
-    console.log(2);
     return "2";
   } else if (clickPos.x > 875 && clickPos.x < 1275) {
-    console.log(3);
     return "3";
   } else return false;
 }
@@ -45,39 +53,20 @@ function clickFunction(e) {
   if (num) {
     var isFirstClick = game.selectTower(num);
     if (isFirstClick) {
-      selectDisk(num);
+      drawSelectDisk(num);
+    } else {
+      resetCanvas();
+      draw(game);
+      setTimeout(function() {
+        game.checkIfWin();
+      }, 500);
     }
-    resetCanvas();
-    draw(game);
   }
 }
 
-// function selectDisk(num) {
-//   console.log("you selected the first disk in the tower" + num);
-//   selectedTower = game["tower" + num];
-//   lastDiskSize = selectedTower[selectedTower.length - 1].size;
-//   console.log(lastDiskSize);
+function resetbutton(e) {
+  resetCanvas();
+  startGame(numTower);
+}
 
-//   ctx.fillStyle = "rgba(0, 128, 128, 0.5)";
-//   // // disk di posizione (selectedTower.length-1) e size (lastDiskSize)
-//   ctx.fillRect(
-//     225 + 425 * (num - 1) - lastDiskSize / 2,
-//     520 - selectedTower.length * game.diskHeigth,
-//     lastDiskSize,
-//     game.diskHeigth
-//   );
-// }
-
-//stabilisco se posso muovere il disco o no
-// function secondClick(e) {
-//   var clickPos = getPosition(e);
-//   destTowerNum = whichTower(e);
-//   console.log("the second tower is : " + originTowerNum);
-//   if (checkIfMove(originTowerNum, destTowerNum) === false) {
-//     //il disco selezionato con il firstClick torna come prima
-//   } else {
-//     move(originTowerNum, destTowerNum);
-//     resetCanvas();
-//     draw(game);
-//   }
-// }
+// https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQBSNN8u2EBffW8mCDSsHObNRsbLotIime3yYiDyV7Xb1N8hhSxg

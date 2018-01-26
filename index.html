@@ -6,19 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles.css">
-
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 
 <body>
-
-    <div id="title">
+    <!-- <div class="alert"></div> -->
+    <div>
         <h1>Hanoi Tower</h1>
     </div>
     <div>
         <form class="number-disk">
             <label for="number of disk">Number of disks:</label>
-            <select name="number of disk">
+            <select id="select">
+                <option></option>
                 <option>3</option>
                 <option>4</option>
                 <option>5</option>
@@ -28,22 +30,15 @@
             </select>
         </form>
 
-        <div class="moves">
-            <form>Moves:
-                <span>
-                    </spana>
-            </form>
-            <form>Minimum moves:
-                <span></span>
-            </form>
-        </div>
     </div>
     <div>
-        <canvas id="canvas" height="650px" width="1300px"></canvas>
+        <canvas id="canvas" height="670px" width="1300px"></canvas>
     </div>
 
+    <!-- <div class="impossible-move">Illegal movement: try again</div> -->
+
     <div>
-        <button type="button">Reset</button>
+        <button type="button" id="reset-button">Reset</button>
         <button type="button">Solution</button>
     </div>
 
