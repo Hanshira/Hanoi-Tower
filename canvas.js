@@ -1,6 +1,9 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+var audio = new Audio();
+audio.src = "Soul-Colors.mp3";
+
 var diskHeigth = 50;
 //ctx.scale(0.8, 0.8);
 // ctx.shadowColor = "rgba(32, 13, 13, 0.2)";

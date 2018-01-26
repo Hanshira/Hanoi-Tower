@@ -34,13 +34,26 @@ HanoiTower.prototype.defaultGame = function() {
 HanoiTower.prototype.checkIfMove = function(originTowerNum, destTowerNum) {
   var origin = this["tower" + originTowerNum];
   var destination = this["tower" + destTowerNum];
-  if (origin.length <= 0 || originTowerNum === destTowerNum) return false;
+  if (origin.length <= 0 || originTowerNum === destTowerNum)
+    //{
+    //   $("#modalAlert").addClass("showModal");
+    //   $("#modalAlert").html(
+    //     "<p>Illegal movement</p>"
+    //   );
+    // }
+    alert("Illegal movement");
   else {
     if (
       destination.length >= 1 &&
       destination[destination.length - 1].size < origin[origin.length - 1].size
     )
-      return false;
+      //  {
+      //   $("#modalAlert").addClass("showModal");
+      //   $("#modalAlert").html(
+      //     "<p>Illegal movement</p>"
+      //   );
+      // }
+      return alert("Illegal movement");
     else return true;
   }
 };
@@ -61,8 +74,6 @@ HanoiTower.prototype.selectTower = function(num) {
   if (this.towerSelect.length === 0 && origin.length > 0) {
     this.towerSelect.push(num);
     return true;
-    // } else if (this.towerSelect.length === 0 && origin.length === 0) {
-    //   return true;
   } else if (this.towerSelect.length === 1) {
     this.towerSelect.push(num);
     this.originTowerNum = this.towerSelect[0];
@@ -81,13 +92,17 @@ HanoiTower.prototype.checkIfWin = function() {
   var i = 0;
   test = true;
   while (test && i < this.diskNumber) {
-    if (this.tower3[i].size === this.defaultTower[i].size) test = true;
+    if (
+      this.tower3.length > 1 &&
+      this.tower3[i].size === this.defaultTower[i].size
+    )
+      test = true;
     else test = false;
     i++;
   }
   if (test === true && this.howManyMoves() === this.minimumMoves)
-    alert("Good, you did it and with the minimum moves!");
-  else if (test === true) alert("Good, you did it!");
+    alert("Congratulations, you won and with the minimum moves!");
+  else if (test === true) alert("Congratulations, you won!");
   return test;
 };
 

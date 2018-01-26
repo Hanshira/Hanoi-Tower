@@ -4,10 +4,14 @@ var ctx = canvas.getContext("2d");
 var game;
 var numTower;
 
+var audio = new Audio();
+audio.src = "Soul-Colors.mp3";
+
 window.onload = function() {
   document.getElementById("select").addEventListener(
     "change",
     function() {
+      audio.play();
       numTower = document.getElementById("select").value;
       game = new HanoiTower(numTower);
       resetCanvas();
@@ -38,7 +42,6 @@ function getPosition(e) {
 
 function whichTower(e) {
   var clickPos = getPosition(e);
-  console.log(clickPos);
   if (clickPos.x > 25 && clickPos.x < 425) {
     return "1";
   } else if (clickPos.x > 450 && clickPos.x < 850) {

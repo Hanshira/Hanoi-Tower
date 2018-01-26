@@ -11,16 +11,17 @@ body {
   background: url("./background1.jpg");
   background-size: cover;
 }
-.alertOn {
+#modalAlert {
   width: 200px;
   height: 50px;
-  display: on;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  display: none;
 }
 
-.alertOf {
-  width: 200px;
-  height: 50px;
-  display: of;
+.showModal {
+  display: block;
 }
 
 h1 {
